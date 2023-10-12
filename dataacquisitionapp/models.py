@@ -34,8 +34,8 @@ class StageLead(models.Model):
 # crm.status.list?filter[ENTITY_ID]=SOURCE
 class Source(models.Model):
     ID = models.PositiveIntegerField(primary_key=True, verbose_name='ID источника в BX24')
-    STATUS_ID = models.CharField(verbose_name='Абревиатура источника', max_length=35, db_index=True)
-    NAME = models.CharField(verbose_name='Название источника', max_length=100, blank=True, null=True)
+    STATUS_ID = models.CharField(verbose_name='Абревиатура источника', max_length=100, db_index=True)
+    NAME = models.CharField(verbose_name='Название источника', max_length=200, blank=True, null=True)
 
     def __str__(self):
         return '{} - {}'.format(self.STATUS_ID or "-", self.NAME or "")

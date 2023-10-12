@@ -16,7 +16,7 @@ class Command(BaseCommand):
         self.bx24 = Bitrix24()
         self.logger = logging.getLogger("CommandUpdateUsers")
         self.logger.setLevel(logging.INFO)
-        handler = logging.FileHandler("logs/commands/update_users.log")
+        handler = logging.handlers.TimedRotatingFileHandler("logs/commands/update_users.log", when="midnight", interval=1, backupCount=10)
         formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
         handler.setFormatter(formatter)
         self.logger.addHandler(handler)

@@ -13,7 +13,7 @@ class Command(BaseCommand):
         super().__init__(*args, **kwargs)
         self.logger = logging.getLogger("CommandEventUsers")
         self.logger.setLevel(logging.INFO)
-        handler = logging.FileHandler("logs/offline_events/user.log")
+        handler = logging.handlers.TimedRotatingFileHandler("logs/offline_events/user.log", when="midnight", interval=1, backupCount=10)
         formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
         handler.setFormatter(formatter)
         self.logger.addHandler(handler)

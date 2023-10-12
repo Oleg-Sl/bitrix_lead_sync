@@ -16,7 +16,7 @@ class Command(BaseCommand):
         super().__init__(*args, **kwargs)
         self.logger = logging.getLogger("CommandUpdateStatusSemantic")
         self.logger.setLevel(logging.INFO)
-        handler = logging.FileHandler("logs/commands/update_status_semancic_lead.log")
+        handler = logging.handlers.TimedRotatingFileHandler("logs/commands/update_status_semancic_lead.log", when="midnight", interval=1, backupCount=10)
         formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
         handler.setFormatter(formatter)
         self.logger.addHandler(handler)

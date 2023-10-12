@@ -18,21 +18,21 @@ from dataacquisitionapp.models import (
 )
 
 
-def process_update_stage_history(lead_ids):
-    print("GET STAGE HISTORY = ", lead_ids)
+def update_stage_history(lead_ids):
     for i in range(0, len(lead_ids), settings.BATCH_SIZE):
-        history_data_dict = get_stage_history_lead_data(lead_ids[i:i + settings.BATCH_SIZE])
+        sleep(settings.THROTTLE)
+        history_data_dict = get_stage_history_from_bx24(lead_ids[i:i + settings.BATCH_SIZE])
         for value in history_data_dict.values():
             items_list = value.get("items")
-            if isinstance(items_list, list):
-                create_history_data_for_lead(items_list)
-        sleep(settings.THROTTLE)
+            if isinstance(items_list, list) and items_list:
+                history_data_summary = analyze_lead_stage_history(items_list)
+                create_history_data_list_to_db(history_data_summary)
 
 
-def get_stage_history_lead_data(self, ids):
+def get_stage_history_from_bx24(ids):
     cmd = {}
     for id_ in ids:
-        cmd[id_] = f"{self.method}?entityTypeId=1&filter[OWNER_ID]={id_}&order[CREATED_TIME]=ASC"
+        cmd[id_] = f"crm.stagehistory.list?entityTypeId=1&filter[OWNER_ID]={id_}&order[CREATED_TIME]=ASC"
 
     response = Bitrix24().call("batch", {
         "halt": 0,
@@ -45,14 +45,7 @@ def get_stage_history_lead_data(self, ids):
     return response["result"]["result"]
 
 
-def create_history_data_for_lead(history_data_list):
-    if not history_data_list:
-        return
-    data_lsit = get_first_created_time(history_data_list)
-    create_history_data_list(data_lsit)
-
-
-def get_first_created_time(history_data_list):
+def analyze_lead_stage_history(history_data_list):
     if not history_data_list:
         return
     lead_id = history_data_list[0].get("OWNER_ID")
@@ -91,7 +84,7 @@ def get_first_created_time(history_data_list):
 
 
 @transaction.atomic
-def create_history_data(history_data):
+def create_history_data_to_db(history_data):
     record = LeadStageDuration.objects.filter(LEAD_ID=history_data.get("LEAD_ID"), STATUS_ID__STATUS_ID=history_data.get("STATUS_ID")).exists()
     new_data = {
         'DATE_CREATE': history_data.get('DATE_CREATE'),
@@ -106,7 +99,6 @@ def create_history_data(history_data):
 
 
 @transaction.atomic
-def create_history_data_list(history_data):
+def create_history_data_list_to_db(history_data):
     for data in history_data:
-        create_history_data(data)
-
+        create_history_data_to_db(data)

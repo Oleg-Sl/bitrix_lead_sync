@@ -65,7 +65,7 @@ class StatusSemanticLeads(models.Model):
 # crm.lead.list
 class Lead(models.Model):
     ID = models.PositiveIntegerField(primary_key=True, verbose_name='ID лида в BX24', unique=True, db_index=True)
-    TITLE = models.CharField(verbose_name='Название лида', max_length=35, blank=True, null=True)
+    TITLE = models.CharField(verbose_name='Название лида', max_length=500, blank=True, null=True)
     DATE_CREATE = models.DateTimeField(verbose_name='Дата создания лида', blank=True, null=True, db_index=True)
     # DESIGNER = models.CharField(verbose_name='Дизайнер', max_length=100, blank=True, null=True)
     ASSIGNED_BY_ID = models.ForeignKey(User, verbose_name='Ответственный', on_delete=models.CASCADE,

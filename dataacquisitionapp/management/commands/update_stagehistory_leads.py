@@ -2,7 +2,6 @@ import logging
 from django.core.management.base import BaseCommand
 from django.conf import settings
 from time import sleep
-import pprint
 
 from dataacquisitionapp.models import (
     User,
@@ -58,6 +57,7 @@ class Command(BaseCommand):
             "halt": 0,
             "cmd": cmd
         })
+
         if not response or "result" not in response or "result" not in response["result"]:
             return
 

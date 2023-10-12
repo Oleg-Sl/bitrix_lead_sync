@@ -60,11 +60,11 @@ def get_first_created_time(history_data_list):
 
 @transaction.atomic
 def create_history_data(history_data):
-    record = LeadStageDuration.objects.filter(LEAD_ID__ID=history_data.get("OWNER_ID"), STATUS_ID__STATUS_ID=history_data.get("STATUS_ID")).exists()
+    record = LeadStageDuration.objects.filter(LEAD_ID=history_data.get("LEAD_ID"), STATUS_ID__STATUS_ID=history_data.get("STATUS_ID")).exists()
     new_data = {
         'DATE_CREATE': history_data.get('DATE_CREATE'),
         'DURATION': history_data.get('DURATION'),
-        'LEAD_ID': Lead.objects.filter(STATUS_ID=history_data.get("OWNER_ID")).first(),
+        'LEAD_ID': Lead.objects.filter(ID=history_data.get("LEAD_ID")).first(),
         'STATUS_ID': StageLead.objects.filter(STATUS_ID=history_data.get("STATUS_ID")).first(),
     }
     if record:

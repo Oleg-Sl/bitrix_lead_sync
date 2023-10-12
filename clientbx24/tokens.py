@@ -6,8 +6,19 @@ from django.conf import settings
 path_secret_file = os.path.join(settings.BASE_DIR, 'clientbx24', 'secrets_bx24.json')
 
 
+# def save_secrets(data):
+#     """ Запись токенов доступа к BX24 в файл """
+#     with open(path_secret_file, 'w') as secrets_file:
+#         json.dump(data, secrets_file)
+
+
 def save_secrets(data):
     """ Запись токенов доступа к BX24 в файл """
+    with open(path_secret_file, 'r') as secrets_file:
+        data_old = json.load(secrets_file)
+        data["client_secret"] = data_old["client_secret"]
+        data["client_id"] = data_old["client_id"]
+
     with open(path_secret_file, 'w') as secrets_file:
         json.dump(data, secrets_file)
 

@@ -2,6 +2,11 @@ from django.db import transaction
 from collections import defaultdict
 from datetime import datetime, timedelta
 import pprint
+from time import sleep
+from django.conf import settings
+
+from clientbx24.requests import Bitrix24
+
 
 from dataacquisitionapp.models import (
     User,
@@ -11,6 +16,33 @@ from dataacquisitionapp.models import (
     Lead,
     LeadStageDuration,
 )
+
+
+def process_update_stage_history(lead_ids):
+    print("GET STAGE HISTORY = ", lead_ids)
+    for i in range(0, len(lead_ids), settings.BATCH_SIZE):
+        history_data_dict = get_stage_history_lead_data(lead_ids[i:i + settings.BATCH_SIZE])
+        for value in history_data_dict.values():
+            items_list = value.get("items")
+            if isinstance(items_list, list):
+                create_history_data_for_lead(items_list)
+        sleep(settings.THROTTLE)
+
+
+def get_stage_history_lead_data(self, ids):
+    cmd = {}
+    for id_ in ids:
+        cmd[id_] = f"{self.method}?entityTypeId=1&filter[OWNER_ID]={id_}&order[CREATED_TIME]=ASC"
+
+    response = Bitrix24().call("batch", {
+        "halt": 0,
+        "cmd": cmd
+    })
+
+    if not response or "result" not in response or "result" not in response["result"]:
+        return
+
+    return response["result"]["result"]
 
 
 def create_history_data_for_lead(history_data_list):

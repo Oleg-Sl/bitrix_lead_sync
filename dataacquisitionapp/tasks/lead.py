@@ -4,6 +4,7 @@ from dataacquisitionapp.models import (
     StageLead,
     Source,
     StatusSemanticLeads,
+    Company,
     Lead,
 )
 
@@ -15,6 +16,8 @@ def create_lead(data_lead):
         "TITLE": data_lead.get("TITLE"),
         "DATE_CREATE": data_lead.get("DATE_CREATE"),
         "ASSIGNED_BY_ID": User.objects.filter(ID=data_lead.get("ASSIGNED_BY_ID")).first(),
+        "DESIGNER_USER": User.objects.filter(ID=data_lead.get("UF_CRM_1647768489")).first(),
+        "DESIGNER_BURO": Company.objects.filter(ID=data_lead.get("UF_CRM_1647768419")).first(),
         "STATUS_ID": StageLead.objects.filter(STATUS_ID=data_lead.get("STATUS_ID")).first(),
         "SOURCE_ID": Source.objects.filter(STATUS_ID=data_lead.get("SOURCE_ID")).first(),
         "STATUS_SEMANTIC_ID": StatusSemanticLeads.objects.filter(STATUS_SEMANTIC_ID=data_lead.get("STATUS_SEMANTIC_ID")).first(),

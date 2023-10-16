@@ -62,6 +62,18 @@ class StatusSemanticLeads(models.Model):
         verbose_name_plural = 'Семантические статусы лида'
 
 
+class Company(models.Model):
+    ID = models.PositiveIntegerField(primary_key=True, verbose_name='ID компании в BX24', unique=True, db_index=True)
+    TITLE = models.CharField(verbose_name='Название компании', max_length=750, blank=True, null=True)
+
+    def __str__(self):
+        return '{}. {}'.format(self.ID or "-", self.TITLE or "")
+
+    class Meta:
+        verbose_name = 'Компания'
+        verbose_name_plural = 'Компании'
+
+
 # crm.lead.list
 class Lead(models.Model):
     ID = models.PositiveIntegerField(primary_key=True, verbose_name='ID лида в BX24', unique=True, db_index=True)
@@ -70,6 +82,11 @@ class Lead(models.Model):
     # DESIGNER = models.CharField(verbose_name='Дизайнер', max_length=100, blank=True, null=True)
     ASSIGNED_BY_ID = models.ForeignKey(User, verbose_name='Ответственный', on_delete=models.CASCADE,
                                        related_name='lead', blank=True, null=True, db_index=True)
+    DESIGNER_USER = models.ForeignKey(User, verbose_name='Дизайнер', on_delete=models.CASCADE,
+                                     related_name='lead_designer', blank=True, null=True, db_index=True)
+    DESIGNER_BURO = models.ForeignKey(Company, verbose_name='Дизайнерское бюро', on_delete=models.CASCADE,
+                                      related_name='lead_designer_buro', blank=True, null=True, db_index=True)
+
     STATUS_ID = models.ForeignKey(StageLead, verbose_name='Стадия лида', on_delete=models.CASCADE,
                                   related_name='lead', blank=True, null=True, db_index=True)
     SOURCE_ID = models.ForeignKey(Source, verbose_name='Источник', on_delete=models.CASCADE,

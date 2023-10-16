@@ -4,29 +4,29 @@ from time import sleep
 import logging
 
 from clientbx24.requests import Bitrix24
-from dataacquisitionapp.tasks.lead import create_lead, create_leads
+from dataacquisitionapp.tasks.company import create_company
 
 
 class Command(BaseCommand):
-    help = 'Update all LEADS in DB'
-    method = 'crm.lead.list'
-    fields = ['ID', 'TITLE', 'DATE_CREATE', 'DESIGNER', 'ASSIGNED_BY_ID', 'STATUS_ID', 'SOURCE_ID', 'STATUS_SEMANTIC_ID', 'UF_CRM_1647768489', 'UF_CRM_1647768419']
+    help = 'Update all COMPANIES in DB'
+    method = 'crm.deal.list'
+    fields = ['ID', 'TITLE', ]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.bx24 = Bitrix24()
-        self.logger = logging.getLogger("CommandUpdateLeads")
+        self.logger = logging.getLogger("CommandUpdateCompanies")
         self.logger.setLevel(logging.INFO)
-        handler = logging.handlers.TimedRotatingFileHandler("logs/commands/update_leads.log", when="midnight", interval=1, backupCount=10)
+        handler = logging.handlers.TimedRotatingFileHandler("logs/commands/update_companies.log", when="midnight", interval=1, backupCount=10)
         formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
         handler.setFormatter(formatter)
         self.logger.addHandler(handler)
 
     def handle(self, *args, **kwargs):
-        try:
-            self.get_data()
-        except Exception as e:
-            self.logger.error(f"An error occurred: {e}")
+        # try:
+        self.get_data()
+        # except Exception as e:
+        #     self.logger.error(f"An error occurred: {e}")
 
     def get_data(self):
         count = 0
@@ -50,4 +50,4 @@ class Command(BaseCommand):
         print("Получено или обновлено лидов: ", count)
 
     def process_data(self, data):
-        create_lead(data)
+        create_company(data)

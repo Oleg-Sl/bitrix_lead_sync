@@ -11,7 +11,6 @@ from bx.models import (
     Lead,
 )
 
-from bx.tasks.lead_stage_history import create_history_data_for_lead
 from clientbx24.requests import Bitrix24
 from bx.tasks.lead_stage_history import update_stage_history
 

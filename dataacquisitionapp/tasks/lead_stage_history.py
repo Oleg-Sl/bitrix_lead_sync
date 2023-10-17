@@ -88,7 +88,7 @@ def create_history_data_to_db(history_data):
     record = LeadStageDuration.objects.filter(LEAD_ID=history_data.get("LEAD_ID"), STATUS_ID__STATUS_ID=history_data.get("STATUS_ID")).exists()
     new_data = {
         'DATE_CREATE': history_data.get('DATE_CREATE'),
-        'DURATION': history_data.get('DURATION'),
+        'DURATION': history_data.get('DURATION').total_seconds() / 60 if history_data.get('DURATION') else 0,
         'LEAD_ID': Lead.objects.filter(ID=history_data.get("LEAD_ID")).first(),
         'STATUS_ID': StageLead.objects.filter(STATUS_ID=history_data.get("STATUS_ID")).first(),
     }

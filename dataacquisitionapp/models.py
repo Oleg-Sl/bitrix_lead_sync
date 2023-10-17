@@ -79,7 +79,6 @@ class Lead(models.Model):
     ID = models.PositiveIntegerField(primary_key=True, verbose_name='ID лида в BX24', unique=True, db_index=True)
     TITLE = models.CharField(verbose_name='Название лида', max_length=500, blank=True, null=True)
     DATE_CREATE = models.DateTimeField(verbose_name='Дата создания лида', blank=True, null=True, db_index=True)
-    # DESIGNER = models.CharField(verbose_name='Дизайнер', max_length=100, blank=True, null=True)
     ASSIGNED_BY_ID = models.ForeignKey(User, verbose_name='Ответственный', on_delete=models.CASCADE,
                                        related_name='lead', blank=True, null=True, db_index=True)
     DESIGNER_USER = models.ForeignKey(User, verbose_name='Дизайнер', on_delete=models.CASCADE,
@@ -105,8 +104,8 @@ class Lead(models.Model):
 # crm.stagehistory.list?entityTypeId=1&order[CREATED_TIME]=ASC
 class LeadStageDuration(models.Model):
     DATE_CREATE = models.DateTimeField(verbose_name='Дата первого перехода на стадию', blank=True, null=True, db_index=True)
-    # DURATION = models.PositiveIntegerField(verbose_name='Длительность нахождения на стадии', blank=True, null=True, db_index=True)
-    DURATION = models.DurationField(verbose_name='Длительность нахождения на стадии', blank=True, null=True, db_index=True)
+    DURATION = models.PositiveIntegerField(verbose_name='Длительность нахождения на стадии в мин.', blank=True, null=True, db_index=True)
+    # DURATION = models.DurationField(verbose_name='Длительность нахождения на стадии', blank=True, null=True, db_index=True)
     LEAD_ID = models.ForeignKey(Lead, verbose_name='Лид', on_delete=models.CASCADE,
                                 related_name='lead_stage_duration', blank=True, null=True, db_index=True)
     STATUS_ID = models.ForeignKey(StageLead, verbose_name='Стадия лида', on_delete=models.CASCADE,

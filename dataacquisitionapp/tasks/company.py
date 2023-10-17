@@ -22,11 +22,11 @@ def create_company(data_lead):
 
 
 @transaction.atomic
-def create_companys(data_companies):
+def create_companies(data_companies):
     for data_company in data_companies:
         create_company(data_company)
 
 
 @transaction.atomic
-def remove_leads(company_remove_ids):
+def remove_companies(company_remove_ids):
     res = Company.objects.filter(ID__in=company_remove_ids).delete()

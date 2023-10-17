@@ -102,7 +102,7 @@ class Lead(models.Model):
 
 
 # crm.stagehistory.list?entityTypeId=1&order[CREATED_TIME]=ASC
-class LeadStageDuration(models.Model):
+class DurationStageLead(models.Model):
     DATE_CREATE = models.DateTimeField(verbose_name='Дата первого перехода на стадию', blank=True, null=True, db_index=True)
     DURATION = models.PositiveIntegerField(verbose_name='Длительность нахождения на стадии в мин.', blank=True, null=True, db_index=True)
     # DURATION = models.DurationField(verbose_name='Длительность нахождения на стадии', blank=True, null=True, db_index=True)

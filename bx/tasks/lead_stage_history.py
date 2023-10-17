@@ -14,7 +14,7 @@ from dataacquisitionapp.models import (
     Source,
     StatusSemanticLeads,
     Lead,
-    LeadStageDuration,
+    DurationStageLead,
 )
 
 
@@ -85,7 +85,7 @@ def analyze_lead_stage_history(history_data_list):
 
 @transaction.atomic
 def create_history_data_to_db(history_data):
-    record = LeadStageDuration.objects.filter(LEAD_ID=history_data.get("LEAD_ID"), STATUS_ID__STATUS_ID=history_data.get("STATUS_ID")).exists()
+    record = DurationStageLead.objects.filter(LEAD_ID=history_data.get("LEAD_ID"), STATUS_ID__STATUS_ID=history_data.get("STATUS_ID")).exists()
     new_data = {
         'DATE_CREATE': history_data.get('DATE_CREATE'),
         'DURATION': history_data.get('DURATION').total_seconds() / 60 if history_data.get('DURATION') else 0,
@@ -93,9 +93,9 @@ def create_history_data_to_db(history_data):
         'STATUS_ID': StageLead.objects.filter(STATUS_ID=history_data.get("STATUS_ID")).first(),
     }
     if record:
-        res = LeadStageDuration.objects.filter(LEAD_ID__ID=history_data.get("OWNER_ID"), STATUS_ID__STATUS_ID=history_data.get("STATUS_ID")).update(**new_data)
+        res = DurationStageLead.objects.filter(LEAD_ID__ID=history_data.get("OWNER_ID"), STATUS_ID__STATUS_ID=history_data.get("STATUS_ID")).update(**new_data)
     else:
-        res = LeadStageDuration.objects.create(**new_data)
+        res = DurationStageLead.objects.create(**new_data)
 
 
 @transaction.atomic

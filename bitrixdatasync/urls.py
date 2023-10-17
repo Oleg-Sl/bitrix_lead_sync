@@ -4,5 +4,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('bitrixdatasync/', include('dataacquisitionapp.urls')),
+    path('bitrixdatasync/', include('bx.urls')),
 ]

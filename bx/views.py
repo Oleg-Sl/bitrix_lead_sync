@@ -19,7 +19,7 @@ def install_api_view(request):
             'client_endpoint': f'https://{request.GET.get("DOMAIN", "")}/rest/',
         }
         tokens.save_secrets(data)
-        return render(request, 'dataacquisitionapp/install.html')
+        return render(request, 'bx/install.html')
     else:
         return JsonResponse({'message': 'Method not allowed'}, status=405)
 
@@ -28,7 +28,7 @@ def install_api_view(request):
 @xframe_options_exempt
 def index_api_view(request):
     if request.method == 'POST':
-        return render(request, 'dataacquisitionapp/index.html', context={})
+        return render(request, 'bx/index.html', context={})
     else:
         return JsonResponse({'message': 'Method not allowed'}, status=405)
 
@@ -52,10 +52,10 @@ def index_api_view(request):
 #             'client_endpoint': f'https://{request.query_params.get("DOMAIN", "")}/rest/',
 #         }
 #         tokens.save_secrets(data)
-#         return render(request, 'dataacquisitionapp/install.html')
+#         return render(request, 'bx/install.html')
 #
 #
 # class IndexApiView(views.APIView):
 #     @xframe_options_exempt
 #     def post(self, request):
-#         return render(request, 'dataacquisitionapp/index.html', context={})
+#         return render(request, 'bx/index.html', context={})

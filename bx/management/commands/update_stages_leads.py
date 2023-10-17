@@ -4,7 +4,7 @@ from time import sleep
 import logging
 
 from clientbx24.requests import Bitrix24
-from dataacquisitionapp.tasks.lead_stage import create_stage
+from bx.tasks.lead_stage import create_stage
 
 
 class Command(BaseCommand):

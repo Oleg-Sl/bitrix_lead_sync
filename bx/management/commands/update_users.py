@@ -4,7 +4,7 @@ from time import sleep
 import logging
 
 from clientbx24.requests import Bitrix24
-from dataacquisitionapp.tasks.user import create_user
+from bx.tasks.user import create_user
 
 
 class Command(BaseCommand):

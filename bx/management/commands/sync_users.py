@@ -2,7 +2,7 @@ import logging
 from django.core.management.base import BaseCommand
 
 from clientbx24.events import OfflineEvents
-from dataacquisitionapp.tasks.user import create_user
+from bx.tasks.user import create_user
 
 
 class Command(BaseCommand):

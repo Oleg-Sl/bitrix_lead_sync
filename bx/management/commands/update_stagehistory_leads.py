@@ -3,7 +3,7 @@ from django.core.management.base import BaseCommand
 from django.conf import settings
 from time import sleep
 
-from dataacquisitionapp.models import (
+from bx.models import (
     User,
     StageLead,
     Source,
@@ -11,9 +11,9 @@ from dataacquisitionapp.models import (
     Lead,
 )
 
-from dataacquisitionapp.tasks.lead_stage_history import create_history_data_for_lead
+from bx.tasks.lead_stage_history import create_history_data_for_lead
 from clientbx24.requests import Bitrix24
-from dataacquisitionapp.tasks.lead_stage_history import update_stage_history
+from bx.tasks.lead_stage_history import update_stage_history
 
 
 class Command(BaseCommand):

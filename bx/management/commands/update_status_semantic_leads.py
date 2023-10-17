@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 import logging
 
-from dataacquisitionapp.tasks.lead_status_semantic import create_status_semantic
+from bx.tasks.lead_status_semantic import create_status_semantic
 
 
 class Command(BaseCommand):

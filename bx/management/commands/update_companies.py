@@ -4,7 +4,7 @@ from time import sleep
 import logging
 
 from clientbx24.requests import Bitrix24
-from dataacquisitionapp.tasks.company import create_company
+from bx.tasks.company import create_company
 
 
 class Command(BaseCommand):

@@ -1,5 +1,5 @@
 from django.db import transaction
-from dataacquisitionapp.models import (
+from bx.models import (
     User,
     StageLead,
     Source,

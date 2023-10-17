@@ -5,9 +5,9 @@ import logging
 
 from clientbx24.events import OfflineEvents
 from clientbx24.requests import Bitrix24
-from dataacquisitionapp.tasks.lead import create_leads, remove_leads
+from bx.tasks.lead import create_leads, remove_leads
 
-from dataacquisitionapp.tasks.lead_stage_history import update_stage_history
+from bx.tasks.lead_stage_history import update_stage_history
 
 
 class Command(BaseCommand):

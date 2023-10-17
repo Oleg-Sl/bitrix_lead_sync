@@ -8,7 +8,7 @@ from django.conf import settings
 from clientbx24.requests import Bitrix24
 
 
-from dataacquisitionapp.models import (
+from bx.models import (
     User,
     StageLead,
     Source,

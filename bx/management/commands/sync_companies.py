@@ -6,7 +6,7 @@ import logging
 from clientbx24.events import OfflineEvents
 from clientbx24.requests import Bitrix24
 
-from dataacquisitionapp.tasks.company import create_company, remove_companies
+from bx.tasks.company import create_company, remove_companies
 
 
 class Command(BaseCommand):

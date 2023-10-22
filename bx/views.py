@@ -59,7 +59,13 @@ def product_recreation_view(request):
         result_products = bx24.call("crm.product.get", {"id": product_id})
         product = result_products.get("result")
         if not product:
-            return JsonResponse({'message': f"Cann't get data product {product_id}"}, status=405)
+            result_variation_products = bx24.call("catalog.product.get", {"id": product_id})
+            product_id = result_variation_products.get("result", {}).get("product", {}).get("parentId", {}).get("value", {})
+            if product_id:
+                result_products = bx24.call("crm.product.get", {"id": product_id})
+                product = result_products.get("result")
+            else:
+                return JsonResponse({'message': f"Cann't get data product {product_id}"}, status=405)
 
         # создание продукта
         result_products_add = bx24.call("crm.product.add", {"fields": product})

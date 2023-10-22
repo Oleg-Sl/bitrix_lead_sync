@@ -60,6 +60,7 @@ def product_recreation_view(request):
         product = result_products.get("result")
         if not product:
             result_variation_products = bx24.call("catalog.product.get", {"id": product_id})
+            return JsonResponse({'message': result_variation_products}, status=405)
             product_id = result_variation_products.get("result", {}).get("product", {}).get("parentId", {}).get("value", {})
             if product_id:
                 result_products = bx24.call("crm.product.get", {"id": product_id})

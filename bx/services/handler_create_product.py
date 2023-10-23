@@ -110,7 +110,9 @@ class MyHandler:
             product_new_vat_val = product_item.get('taxRate')
             product_new_vat_id = self.find_rate_by_value(vat_list, product_new_vat_val)
 
+            self.logger.info(product)
             # picture_list = product.get("PROPERTY_101") if product.get("PROPERTY_101") else product.get("PREVIEW_PICTURE")
+            picture_url = None
             if product.get("PROPERTY_101"):
                 picture_url = product.get("PROPERTY_101", [{}])[0].get("value", {}).get("downloadUrl", {})
             if product.get("PREVIEW_PICTURE", {}) and product.get("PREVIEW_PICTURE", {}).get("downloadUrl"):
@@ -138,7 +140,7 @@ class MyHandler:
                     "params": {
                         'CURRENCY_ID': 'RUB',
                         'NAME': product_new_name,
-                        'PREVIEW_PICTURE': {"fileData": self.download_file(picture_url)},
+                        'PREVIEW_PICTURE': {"fileData": self.download_file(picture_url)} if picture_url else [],
                         'PRICE': product_new_price,
                         'VAT_ID': product_new_vat_id,
                         'VAT_INCLUDED': product_new_vat_include,

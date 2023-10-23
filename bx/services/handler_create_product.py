@@ -123,7 +123,7 @@ class MyHandler:
                 "fields": {
                     'CURRENCY_ID': 'RUB',
                     'NAME': product_new_name,
-                    'PREVIEW_PICTURE': {"fileData": self.download_file(picture_url)},
+                    'PREVIEW_PICTURE': {"fileData": self.download_file(picture_url)} if picture_url else [],
                     'PRICE': product_new_price if product_new_vat_include == 'N' else product_item_price,
                     'VAT_ID': product_new_vat_id,
                     'VAT_INCLUDED': product_new_vat_include,
@@ -140,7 +140,7 @@ class MyHandler:
                     "params": {
                         'CURRENCY_ID': 'RUB',
                         'NAME': product_new_name,
-                        'PREVIEW_PICTURE': {"fileData": self.download_file(picture_url)} if picture_url else [],
+                        'PREVIEW_PICTURE': picture_url,
                         'PRICE': product_new_price,
                         'VAT_ID': product_new_vat_id,
                         'VAT_INCLUDED': product_new_vat_include,

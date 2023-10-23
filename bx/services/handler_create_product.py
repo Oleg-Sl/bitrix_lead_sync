@@ -74,6 +74,7 @@ class MyHandler:
                 return
 
             product_item = response_result.get("product_item", {}).get("productRow", {})
+            self.logger.info(product_item)
             vat_list = response_result.get("vat_list", {})
             measure_list = response_result.get("measure_list", {}).get("measures", [])
 
@@ -99,6 +100,7 @@ class MyHandler:
                 return
 
             product = response_result.get("product", {}) if response_result.get("product", {}) else response_result.get("product_2", {})
+            self.logger.info(product)
 
             product_new_name = product_item.get('productName')
             product_new_price = product_item.get('priceExclusive')
@@ -110,7 +112,7 @@ class MyHandler:
             product_new_vat_val = product_item.get('taxRate')
             product_new_vat_id = self.find_rate_by_value(vat_list, product_new_vat_val)
 
-            self.logger.info(product)
+
             # picture_list = product.get("PROPERTY_101") if product.get("PROPERTY_101") else product.get("PREVIEW_PICTURE")
             picture_url = None
             if product.get("PROPERTY_101"):

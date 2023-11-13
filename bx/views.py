@@ -43,7 +43,7 @@ def product_recreation_view(request):
         catalog_id = 137
 
         token_input = request.GET.get("token")
-        if token_input != tokens.get_secret("application_token"):
+        if token_input != tokens.get_secret_token("application_token"):
             return JsonResponse({'message': 'Invalid token'}, status=405)
 
         lead_id = request.GET.get("lead_id")

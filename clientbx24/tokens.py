@@ -4,6 +4,7 @@ from django.conf import settings
 
 
 path_secret_file = os.path.join(settings.BASE_DIR, 'clientbx24', 'secrets_bx24.json')
+path_token_file = os.path.join(settings.BASE_DIR, 'clientbx24', 'secrets_application_token.json')
 
 
 # def save_secrets(data):
@@ -50,3 +51,11 @@ def get_secrets_all():
         data = json.load(secrets_file)
 
     return data
+
+
+def get_secret_token(key):
+    """ Получение токена приложения по ключу """
+    with open(path_token_file) as secrets_file:
+        data = json.load(secrets_file)
+
+    return data.get(key)
